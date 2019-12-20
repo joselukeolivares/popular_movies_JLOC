@@ -17,30 +17,3 @@ import com.example.popularmoviesjloc.MainActivity;
 import com.example.popularmoviesjloc.utilities.NetworkUtils;
 
 
-public class movie_db extends AsyncTask<URL,Integer,String> {
-    String JsonResult=null;
-    MainActivity father;
-
-    public movie_db(MainActivity ma){
-    father=ma;
-
-    }
-
-    @Override
-    protected String doInBackground(URL... urls) {
-        String result=null;
-        try{
-            result= NetworkUtils.getResponseFromHttpUrl(urls[0]);
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-
-
-        return result;
-    }
-
-    @Override
-    protected void onPostExecute(String s) {
-        father.stringToJson(s);
-    }
-}

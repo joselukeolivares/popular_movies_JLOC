@@ -1,12 +1,15 @@
 package com.example.popularmoviesjloc.movies;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class movie {
+public class movie implements Parcelable {
     double popularity;
     int voteCount;
     boolean video;
@@ -25,6 +28,33 @@ public class movie {
     public movie(){
 
     }
+
+    protected movie(Parcel in) {
+        popularity = in.readDouble();
+        voteCount = in.readInt();
+        video = in.readByte() != 0;
+        posterPath = in.readString();
+        id = in.readInt();
+        adult = in.readByte() != 0;
+        backdropPath = in.readString();
+        originalLenguage = in.readString();
+        OriginalTitle = in.readString();
+        title = in.readString();
+        vote_average = in.readDouble();
+        overView = in.readString();
+    }
+
+    public static final Creator<movie> CREATOR = new Creator<movie>() {
+        @Override
+        public movie createFromParcel(Parcel in) {
+            return new movie(in);
+        }
+
+        @Override
+        public movie[] newArray(int size) {
+            return new movie[size];
+        }
+    };
 
     public void setPopularity(double popularityParam){
         popularity=popularityParam;
@@ -78,4 +108,24 @@ public class movie {
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeDouble(popularity);
+        parcel.writeInt(voteCount);
+        parcel.writeByte((byte) (video ? 1 : 0));
+        parcel.writeString(posterPath);
+        parcel.writeInt(id);
+        parcel.writeByte((byte) (adult ? 1 : 0));
+        parcel.writeString(backdropPath);
+        parcel.writeString(originalLenguage);
+        parcel.writeString(OriginalTitle);
+        parcel.writeString(title);
+        parcel.writeDouble(vote_average);
+        parcel.writeString(overView);
+    }
 }

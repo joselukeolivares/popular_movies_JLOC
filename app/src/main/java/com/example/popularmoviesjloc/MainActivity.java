@@ -1,6 +1,7 @@
 package com.example.popularmoviesjloc;
 
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -20,11 +21,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import popular_movies_api.movie_db;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,20 +34,12 @@ public class MainActivity extends AppCompatActivity {
     private movieAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
+
      String URLBase="https://api.themoviedb.org/3/discover/movie";
 
      String sortQuery="sort_by";
      String sortParam="vote_average.desc";
      public ArrayList<movie> movieList=new ArrayList<>();
-
-
-     /*
-
-     certification_country US
-     certification=R
-     sort_by=vote_average.desc
-
-      */
 
     final private String apiKeyQuery="api_key";
     final private String apiKeyParam="b70d678e90b7b2248b8795db25cd8d26";
@@ -65,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
 
         getJsonString();
-        updateDataAdapter();
+
 
 
 
@@ -79,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
     public void getJsonString(){
         Uri uri= NetworkUtils.getURI(URLBase,keysUri,keysParam);
         URL url=NetworkUtils.getURL(uri);
-        new movie_db(this).execute(url);
+        new movie_db().execute(url);
 
     };
 
@@ -97,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.optionPopular:
-                sortParam="popularity.desc";
+                sortParam="popularity.asc";
             case R.id.optionRate:
                 sortParam="vote_average.desc";
             default:
@@ -112,7 +106,7 @@ Log.i("stringToJson",result);
             JSONObject results=new JSONObject(result);
             JSONArray movies=results.getJSONArray("results");
             Log.i("moviesLength:",movies.length()+"");
-            for(int i=0;i<movies.length();i++){
+            for(int i=0;i<=movies.length();i++){
                 if(!movies.isNull(i)){
                     JSONObject movieFromDB=movies.getJSONObject(i);
                     movie movieX=new movie();
@@ -126,7 +120,7 @@ Log.i("stringToJson",result);
 
             }
 
-            Log.i("movieList:",movieList.size()+"");
+            Log.i("stringToJson/movieList:",movieList.size()+"");
 
 
         }catch (JSONException e){
@@ -136,11 +130,36 @@ Log.i("stringToJson",result);
 
     }
 
-    public  void updateDataAdapter(){
-        mAdapter.actualizandoData(movieList);
+    public  void updateDataAdapter(ArrayList<movie> itemList){
+        mAdapter.actualizandoData(itemList);
+        mAdapter.notifyDataSetChanged();
 
 
     }
+
+    public  class movie_db extends AsyncTask<URL,Integer,String> {
+
+
+        @Override
+        protected String doInBackground(URL... urls) {
+            String result=null;
+            try{
+                result= NetworkUtils.getResponseFromHttpUrl(urls[0]);
+            }catch(IOException e){
+                e.printStackTrace();
+            }
+
+
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            stringToJson(s);
+            updateDataAdapter(movieList);
+        }
+    }
+
 
 
 }

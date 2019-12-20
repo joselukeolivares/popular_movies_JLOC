@@ -46,14 +46,21 @@ public class movieAdapter extends RecyclerView.Adapter<movieAdapter.movieViewHol
         movie movieSelected=moviesList.get(position);
         String pathPoster=movieSelected.getPosterPath();
         Picasso.with(contextMA).load("http://image.tmdb.org/t/p/w185/"+pathPoster).into(holder.posterMovie);
+        Log.i("poster "+position,"http://image.tmdb.org/t/p/w185/"+pathPoster);
 
 
     }
 
     @Override
     public int getItemCount() {
-        int size=moviesList.size();
-        Log.i("Movies:",size+""); return moviesList.size();
+        if(moviesList==null){
+            return 0;
+        }else{
+            int size=moviesList.size();
+            Log.i("getItemCount/Movies:",size+""); return moviesList.size();
+        }
+
+
     }
 
 
