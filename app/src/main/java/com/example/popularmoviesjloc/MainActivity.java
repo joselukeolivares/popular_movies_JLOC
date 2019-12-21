@@ -1,5 +1,7 @@
 package com.example.popularmoviesjloc;
 
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,7 +30,7 @@ import java.util.ArrayList;
 
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements movieAdapter.onClickAdapter {
 
     private RecyclerView recyclerView;
     private movieAdapter mAdapter;
@@ -53,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView=(RecyclerView)findViewById(R.id.my_recycler_view);
         layoutManager=new GridLayoutManager(this,2);
-        mAdapter=new movieAdapter(this.getApplicationContext());
+        mAdapter=new movieAdapter(this);
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
@@ -135,6 +137,15 @@ Log.i("stringToJson",result);
         mAdapter.notifyDataSetChanged();
 
 
+    }
+
+    @Override
+    public void onClick(movie movieObj) {
+        Log.i("onClick","Clicked");
+        Intent intent=new Intent(this.getApplicationContext(), MovieDetail.class);
+
+        intent.putExtra("movie",movieObj);
+        startActivity(intent);
     }
 
     public  class movie_db extends AsyncTask<URL,Integer,String> {

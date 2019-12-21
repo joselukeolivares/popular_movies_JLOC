@@ -1,7 +1,7 @@
 package com.example.popularmoviesjloc;
 
 import android.content.Context;
-import android.media.Image;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +17,16 @@ import java.util.ArrayList;
 
 public class movieAdapter extends RecyclerView.Adapter<movieAdapter.movieViewHolder> {
     ArrayList<movie> moviesList;
-    Context contextMA;
-    public movieAdapter(Context context){
+    Context context;
+    onClickAdapter onClickImgView;
 
-            contextMA=context;
+    public movieAdapter( onClickAdapter onClickMovie){
+        onClickImgView=onClickMovie;
+
+    }
+
+    public interface onClickAdapter{
+        void onClick(movie movieObj);
     }
 
 
@@ -29,7 +35,7 @@ public class movieAdapter extends RecyclerView.Adapter<movieAdapter.movieViewHol
     @Override
     public movieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        Context context=parent.getContext();
+        context=parent.getContext();
         int contrasintid=R.layout.movie_poster;
         LayoutInflater inflater=LayoutInflater.from(context);
         View view=inflater.inflate(contrasintid,parent,false);
@@ -45,7 +51,8 @@ public class movieAdapter extends RecyclerView.Adapter<movieAdapter.movieViewHol
     public void onBindViewHolder(@NonNull movieViewHolder holder, int position) {
         movie movieSelected=moviesList.get(position);
         String pathPoster=movieSelected.getPosterPath();
-        Picasso.with(contextMA).load("http://image.tmdb.org/t/p/w185/"+pathPoster).into(holder.posterMovie);
+        holder.indexList=position;
+        Picasso.with(context).load("http://image.tmdb.org/t/p/w185/"+pathPoster).into(holder.posterMovie);
         Log.i("poster "+position,"http://image.tmdb.org/t/p/w185/"+pathPoster);
 
 
@@ -65,12 +72,25 @@ public class movieAdapter extends RecyclerView.Adapter<movieAdapter.movieViewHol
 
 
 
-    class movieViewHolder extends RecyclerView.ViewHolder{
+    class movieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView posterMovie;
+        private int indexList;
 
         public movieViewHolder(@NonNull View itemView) {
             super(itemView);
             posterMovie=(ImageView)itemView.findViewById(R.id.imageMovie);
+            itemView.setOnClickListener(this);
+        }
+
+
+
+        @Override
+        public void onClick(View view) {
+            movie movieObjSelected=moviesList.get(getAdapterPosition());
+            onClickImgView.onClick(movieObjSelected);
+
+
+
         }
     }
 

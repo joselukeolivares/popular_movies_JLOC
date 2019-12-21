@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">PopularMoviesJLOC</string>
     <string name="title_activity_movie_detail">MovieDetail</string>
+    <string name="button_mark_Favorite">MARK AS FAVORITE</string>
 </resources>
