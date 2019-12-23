@@ -10,6 +10,7 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -39,16 +40,23 @@ public class MovieDetail extends AppCompatActivity {
 
         Intent intent=getIntent();
         if(intent!=null){
-
             movieObjt=intent.getParcelableExtra("movie");
+
+
+
             nameMovie=(TextView)findViewById(R.id.tv_movieName);
+            Log.i("Detail",":Title_"+movieObjt.getTitle());
             nameMovie.setText(movieObjt.getTitle());
+
             poster=(ImageView)findViewById(R.id.tv_posterMovie);
-            Picasso.with(this).load(movieObjt.getPosterPath()).into(poster);
+            if(!movieObjt.getPosterPath().isEmpty()){
+                Picasso.with(this).load(movieObjt.getPosterPath()).into(poster);
+            }
+
             yearRelease=(TextView)findViewById(R.id.tv_dateRelease);
-            yearRelease.setText(movieObjt.getReleaseDate().toString());
+            //yearRelease.setText(movieObjt.getReleaseDate().toString());
             rateMovie=(TextView)findViewById(R.id.tv_rateMovie);
-            rateMovie.setText(movieObjt.getVoteCount());
+            rateMovie.setText(Double.toString(movieObjt.getVoteCount())+"/10");
             sinopsis=(TextView)findViewById(R.id.tv_sinopsisMovie);
             sinopsis.setText(movieObjt.getOverView());
 

@@ -1,6 +1,6 @@
 package com.example.popularmoviesjloc;
 
-import android.content.Context;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -24,29 +24,29 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
+
 import java.net.URL;
 import java.util.ArrayList;
-
+import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity implements movieAdapter.onClickAdapter {
 
-    private RecyclerView recyclerView;
-    private movieAdapter mAdapter;
+     RecyclerView recyclerView;
+     movieAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
 
-     String URLBase="https://api.themoviedb.org/3/discover/movie";
+     private String URLBase="https://api.themoviedb.org/3/discover/movie";
 
-     String sortQuery="sort_by";
-     String sortParam="vote_average.desc";
-     public ArrayList<movie> movieList=new ArrayList<>();
+    private  String sortQuery="sort_by";
+    private String sortParam="vote_average.desc";
+    private  ArrayList<movie> movieList=new ArrayList<>();
 
     final private String apiKeyQuery="api_key";
     final private String apiKeyParam="b70d678e90b7b2248b8795db25cd8d26";
-    String[] keysUri={sortQuery,apiKeyQuery};
-    String[] keysParam={apiKeyQuery,apiKeyParam};
+    private  String[] keysUri={sortQuery,apiKeyQuery};
+    private String[] keysParam={apiKeyQuery,apiKeyParam};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,12 +72,12 @@ public class MainActivity extends AppCompatActivity implements movieAdapter.onCl
         //Log.i("url",url.toString());
     }
 
-    public void getJsonString(){
+    private  void getJsonString(){
         Uri uri= NetworkUtils.getURI(URLBase,keysUri,keysParam);
         URL url=NetworkUtils.getURL(uri);
         new movie_db().execute(url);
 
-    };
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements movieAdapter.onCl
 
     }
 
-    public  void stringToJson(String result){
+    private   void stringToJson(String result){
 Log.i("stringToJson",result);
         try{
             JSONObject results=new JSONObject(result);
@@ -116,6 +116,19 @@ Log.i("stringToJson",result);
                     movieX.setTitle(title);
                     String pathPoster=movieFromDB.getString("poster_path");
                     movieX.setPosterPath(pathPoster);
+                    String popularity=movieFromDB.getString("popularity");
+                    movieX.setPopularity(Double.parseDouble(popularity));
+                    String vote_count=movieFromDB.getString("vote_average");
+                    movieX.setVoteCount(Double.parseDouble(vote_count));
+                    String video=movieFromDB.getString("video");
+                    movieX.setVideo(Boolean.parseBoolean(video));
+                    String overview=movieFromDB.getString("overview");
+                    movieX.setOverView(overview);
+                    String release_date=movieFromDB.getString("release_date");
+                    movieX.setReleaseDate(release_date);
+
+
+
                     movieList.add(movieX);
                 }
 
@@ -132,7 +145,7 @@ Log.i("stringToJson",result);
 
     }
 
-    public  void updateDataAdapter(ArrayList<movie> itemList){
+    private   void updateDataAdapter(ArrayList<movie> itemList){
         mAdapter.actualizandoData(itemList);
         mAdapter.notifyDataSetChanged();
 
@@ -141,7 +154,7 @@ Log.i("stringToJson",result);
 
     @Override
     public void onClick(movie movieObj) {
-        Log.i("onClick","Clicked");
+        Log.i("onClick",":"+movieObj.getTitle());
         Intent intent=new Intent(this.getApplicationContext(), MovieDetail.class);
 
         intent.putExtra("movie",movieObj);

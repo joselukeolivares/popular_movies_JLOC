@@ -42,9 +42,9 @@ public class movieAdapter extends RecyclerView.Adapter<movieAdapter.movieViewHol
 
 
 
-        movieViewHolder mVH=new movieViewHolder(view);
 
-        return mVH;
+
+        return new movieViewHolder(view);
     }
 
     @Override
@@ -52,8 +52,8 @@ public class movieAdapter extends RecyclerView.Adapter<movieAdapter.movieViewHol
         movie movieSelected=moviesList.get(position);
         String pathPoster=movieSelected.getPosterPath();
         holder.indexList=position;
-        Picasso.with(context).load("http://image.tmdb.org/t/p/w185/"+pathPoster).into(holder.posterMovie);
-        Log.i("poster "+position,"http://image.tmdb.org/t/p/w185/"+pathPoster);
+        Picasso.with(context).load(pathPoster).into(holder.posterMovie);
+        //Log.i("poster "+position,"http://image.tmdb.org/t/p/w185/"+pathPoster);
 
 
     }
@@ -64,7 +64,8 @@ public class movieAdapter extends RecyclerView.Adapter<movieAdapter.movieViewHol
             return 0;
         }else{
             int size=moviesList.size();
-            Log.i("getItemCount/Movies:",size+""); return moviesList.size();
+            //Log.i("getItemCount/Movies:",size+"");
+            return moviesList.size();
         }
 
 

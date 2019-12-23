@@ -5,13 +5,13 @@ import android.os.Parcelable;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.Date;
 
 public class movie implements Parcelable {
     double popularity;
-    int voteCount;
+    double voteCount;
     boolean video;
     String posterPath;
     int id;
@@ -23,7 +23,7 @@ public class movie implements Parcelable {
     String title;
     double vote_average;
     String overView;
-    Date releaseDate;
+    String releaseDate;
     private static final String DATE_OUTPUT_FORMAT="yyyy-MM-dd";
     public movie(){
 
@@ -42,6 +42,7 @@ public class movie implements Parcelable {
         title = in.readString();
         vote_average = in.readDouble();
         overView = in.readString();
+        releaseDate=in.readString();
     }
 
     public static final Creator<movie> CREATOR = new Creator<movie>() {
@@ -63,10 +64,10 @@ public class movie implements Parcelable {
         return popularity;
     }
 
-    public void setVoteCount(int voteCountParam){
-        voteCount=voteCount;
+    public void setVoteCount(double voteCountParam){
+        voteCount=voteCountParam;
     }
-    public int getVoteCount(){
+    public double getVoteCount(){
         return voteCount;
     }
 
@@ -91,17 +92,29 @@ public class movie implements Parcelable {
         return overView;
     }
 
-    public void setReleaseDate(String ReleaseDateParam) throws ParseException {
-        SimpleDateFormat dataFormtat=new SimpleDateFormat("yyyy-mm-dd");
+    public void setReleaseDate(String ReleaseDateParam)  {
+        releaseDate=ReleaseDateParam;
+        /*
+        try{
+            if(!ReleaseDateParam.isEmpty()){
+                releaseDate=new SimpleDateFormat("yyyy-MM-dd").parse(ReleaseDateParam);
+            }
 
-        releaseDate=dataFormtat.parse(ReleaseDateParam);
+
+
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+
+         */
+
     }
-    public Date getReleaseDate(){
+    public String getReleaseDate(){
         return releaseDate;
     }
 
     public void setPosterPath(String posterPathParam){
-        posterPath=posterPathParam;
+        posterPath="http://image.tmdb.org/t/p/w185/"+posterPathParam;
     }
     public String getPosterPath(){
         return posterPath;
@@ -115,17 +128,6 @@ public class movie implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeDouble(popularity);
-        parcel.writeInt(voteCount);
-        parcel.writeByte((byte) (video ? 1 : 0));
-        parcel.writeString(posterPath);
-        parcel.writeInt(id);
-        parcel.writeByte((byte) (adult ? 1 : 0));
-        parcel.writeString(backdropPath);
-        parcel.writeString(originalLenguage);
-        parcel.writeString(OriginalTitle);
-        parcel.writeString(title);
-        parcel.writeDouble(vote_average);
-        parcel.writeString(overView);
+
     }
 }
