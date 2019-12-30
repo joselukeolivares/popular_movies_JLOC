@@ -96,6 +96,8 @@ public class movieAdapter extends RecyclerView.Adapter<movieAdapter.movieViewHol
     }
 
     public void actualizandoData(ArrayList<movie> newMovies){
-        moviesList=newMovies;
+        String title=newMovies.get(0).getTitle();
+        Log.i("actualizandoData","NewMovies:"+title);
+        this.moviesList=newMovies;
     }
 }

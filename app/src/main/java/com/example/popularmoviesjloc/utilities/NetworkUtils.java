@@ -23,7 +23,7 @@ public class NetworkUtils {
                         .appendQueryParameter(keys[0],params[0])
                         .appendQueryParameter(keys[1],params[1])
                         .build();
-        Log.i("uri",uri.toString());
+        Log.i("uri:"+params[0],uri.toString());
 
         return uri;
 

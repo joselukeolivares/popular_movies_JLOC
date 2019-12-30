@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class movie implements Parcelable {
+public class movie implements Parcelable  {
     double popularity;
     double voteCount;
     boolean video;
@@ -29,33 +29,23 @@ public class movie implements Parcelable {
 
     }
 
-    protected movie(Parcel in) {
-        popularity = in.readDouble();
-        voteCount = in.readInt();
-        video = in.readByte() != 0;
-        posterPath = in.readString();
-        id = in.readInt();
-        adult = in.readByte() != 0;
-        backdropPath = in.readString();
-        originalLenguage = in.readString();
-        OriginalTitle = in.readString();
-        title = in.readString();
-        vote_average = in.readDouble();
-        overView = in.readString();
-        releaseDate=in.readString();
+    public movie(Parcel in){
+        readFromParcel(in);
     }
 
-    public static final Creator<movie> CREATOR = new Creator<movie>() {
-        @Override
-        public movie createFromParcel(Parcel in) {
+
+   public static final Parcelable.Creator<movie> CREATOR= new Parcelable.Creator<movie>(){
+        public movie createFromParcel(Parcel in){
             return new movie(in);
         }
 
-        @Override
-        public movie[] newArray(int size) {
-            return new movie[size];
-        }
-    };
+       @Override
+       public movie[] newArray(int i) {
+           return new movie[i];
+       }
+   };
+
+
 
     public void setPopularity(double popularityParam){
         popularity=popularityParam;
@@ -94,19 +84,9 @@ public class movie implements Parcelable {
 
     public void setReleaseDate(String ReleaseDateParam)  {
         releaseDate=ReleaseDateParam;
-        /*
-        try{
-            if(!ReleaseDateParam.isEmpty()){
-                releaseDate=new SimpleDateFormat("yyyy-MM-dd").parse(ReleaseDateParam);
-            }
 
 
 
-        }catch (ParseException e){
-            e.printStackTrace();
-        }
-
-         */
 
     }
     public String getReleaseDate(){
@@ -128,6 +108,18 @@ public class movie implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(this.title);
+        parcel.writeString(this.posterPath);
+        parcel.writeString(this.releaseDate);
+        parcel.writeDouble(this.voteCount);
+        parcel.writeString(this.overView);
+    }
 
+    public void readFromParcel(Parcel in){
+        title=in.readString();
+        posterPath=in.readString();
+        releaseDate=in.readString();
+        voteCount=in.readDouble();
+        overView=in.readString();
     }
 }

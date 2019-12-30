@@ -39,7 +39,10 @@ public class MovieDetail extends AppCompatActivity {
         setContentView(R.layout.activity_movie_detail);
 
         Intent intent=getIntent();
+        Log.i("DetailActivity","Starting");
         if(intent!=null){
+
+
             movieObjt=intent.getParcelableExtra("movie");
 
 
@@ -54,7 +57,8 @@ public class MovieDetail extends AppCompatActivity {
             }
 
             yearRelease=(TextView)findViewById(R.id.tv_dateRelease);
-            //yearRelease.setText(movieObjt.getReleaseDate().toString());
+            yearRelease.setText((movieObjt.getReleaseDate().toString()).substring(0,4));
+
             rateMovie=(TextView)findViewById(R.id.tv_rateMovie);
             rateMovie.setText(Double.toString(movieObjt.getVoteCount())+"/10");
             sinopsis=(TextView)findViewById(R.id.tv_sinopsisMovie);

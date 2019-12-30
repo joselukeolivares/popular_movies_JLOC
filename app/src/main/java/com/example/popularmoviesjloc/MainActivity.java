@@ -39,14 +39,17 @@ public class MainActivity extends AppCompatActivity implements movieAdapter.onCl
 
      private String URLBase="https://api.themoviedb.org/3/discover/movie";
 
+    //language=en-US
+
+
     private  String sortQuery="sort_by";
     private String sortParam="vote_average.desc";
-    private  ArrayList<movie> movieList=new ArrayList<>();
+    private  ArrayList<movie> movieList;
 
     final private String apiKeyQuery="api_key";
     final private String apiKeyParam="b70d678e90b7b2248b8795db25cd8d26";
     private  String[] keysUri={sortQuery,apiKeyQuery};
-    private String[] keysParam={apiKeyQuery,apiKeyParam};
+    private String[] keysParam;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +76,8 @@ public class MainActivity extends AppCompatActivity implements movieAdapter.onCl
     }
 
     private  void getJsonString(){
-        Uri uri= NetworkUtils.getURI(URLBase,keysUri,keysParam);
+        movieList=new ArrayList<>();
+        Uri uri= NetworkUtils.getURI(URLBase,keysUri,new String[]{sortParam,apiKeyParam});
         URL url=NetworkUtils.getURL(uri);
         new movie_db().execute(url);
 
@@ -93,9 +97,11 @@ public class MainActivity extends AppCompatActivity implements movieAdapter.onCl
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.optionPopular:
-                sortParam="popularity.asc";
+                sortParam="popularity.desc";
+                getJsonString();
             case R.id.optionRate:
-                sortParam="vote_average.desc";
+                sortParam="vote_average.asc";
+                getJsonString();
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -103,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements movieAdapter.onCl
     }
 
     private   void stringToJson(String result){
+
 Log.i("stringToJson",result);
         try{
             JSONObject results=new JSONObject(result);
@@ -112,24 +119,33 @@ Log.i("stringToJson",result);
                 if(!movies.isNull(i)){
                     JSONObject movieFromDB=movies.getJSONObject(i);
                     movie movieX=new movie();
-                    String title=movieFromDB.getString("title");
-                    movieX.setTitle(title);
-                    String pathPoster=movieFromDB.getString("poster_path");
-                    movieX.setPosterPath(pathPoster);
-                    String popularity=movieFromDB.getString("popularity");
-                    movieX.setPopularity(Double.parseDouble(popularity));
-                    String vote_count=movieFromDB.getString("vote_average");
-                    movieX.setVoteCount(Double.parseDouble(vote_count));
-                    String video=movieFromDB.getString("video");
-                    movieX.setVideo(Boolean.parseBoolean(video));
-                    String overview=movieFromDB.getString("overview");
-                    movieX.setOverView(overview);
-                    String release_date=movieFromDB.getString("release_date");
-                    movieX.setReleaseDate(release_date);
+                    try{
+                        String title=movieFromDB.getString("title");
+                        movieX.setTitle(title);
+                        String pathPoster=movieFromDB.getString("poster_path");
+                        movieX.setPosterPath(pathPoster);
+                        String popularity=movieFromDB.getString("popularity");
+                        movieX.setPopularity(Double.parseDouble(popularity));
+                        String vote_count=movieFromDB.getString("vote_average");
+                        movieX.setVoteCount(Double.parseDouble(vote_count));
+                        String video=movieFromDB.getString("video");
+                        movieX.setVideo(Boolean.parseBoolean(video));
+                        String overview=movieFromDB.getString("overview");
+                        movieX.setOverView(overview);
+
+                        String release_date=movieFromDB.optString ("release_date");
+                        movieX.setReleaseDate(release_date);
+
+                        movieList.add(movieX);
+
+                    }catch(JSONException e){
+                        e.printStackTrace();
+                    }
 
 
 
-                    movieList.add(movieX);
+
+
                 }
 
 
@@ -180,6 +196,7 @@ Log.i("stringToJson",result);
         @Override
         protected void onPostExecute(String s) {
             stringToJson(s);
+            Log.i("new list",s);
             updateDataAdapter(movieList);
         }
     }
