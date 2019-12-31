@@ -10,21 +10,12 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class movie implements Parcelable  {
-   private double popularity;
     private double voteCount;
-    private boolean video;
     private String posterPath;
-    private int id;
-    private boolean adult;
-    private String backdropPath;
-    private String originalLenguage;
-    private String OriginalTitle;
-    private ArrayList<Integer> genreIDs;
     private String title;
-    private double vote_average;
     private String overView;
     private String  releaseDate;
-    private static final String DATE_OUTPUT_FORMAT="yyyy-MM-dd";
+
     public movie(){
 
     }
@@ -48,10 +39,6 @@ public class movie implements Parcelable  {
 
 
     public void setPopularity(double popularityParam){
-        popularity=popularityParam;
-    }
-    public double getPopularity(){
-        return popularity;
     }
 
     public void setVoteCount(double voteCountParam){
@@ -62,10 +49,6 @@ public class movie implements Parcelable  {
     }
 
     public void setVideo(boolean videoParam){
-        video=videoParam;
-    }
-    public boolean getVideo(){
-        return video;
     }
 
     public void setTitle(String titleParam){

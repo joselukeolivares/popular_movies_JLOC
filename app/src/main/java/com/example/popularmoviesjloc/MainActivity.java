@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements movieAdapter.onCl
 
     final private String apiKeyQuery="api_key";
     private final String[] keysUri={sortQuery,apiKeyQuery};
-    private String[] keysParam;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,8 +133,10 @@ Log.i("stringToJson",result);
 
                         String release_date=movieFromDB.optString ("release_date");
                         movieX.setReleaseDate(release_date);
+                        if(!pathPoster.equals("null")){
+                            movieList.add(movieX);
+                        }
 
-                        movieList.add(movieX);
 
                     }catch(JSONException e){
                         e.printStackTrace();

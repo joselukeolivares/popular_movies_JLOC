@@ -63,7 +63,7 @@ public class movieAdapter extends RecyclerView.Adapter<movieAdapter.movieViewHol
         if(moviesList==null){
             return 0;
         }else{
-            int size=moviesList.size();
+            @SuppressWarnings("unused") int size=moviesList.size();
             //Log.i("getItemCount/Movies:",size+"");
             return moviesList.size();
         }
