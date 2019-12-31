@@ -2,4 +2,8 @@
     <string name="app_name">PopularMoviesJLOC</string>
     <string name="title_activity_movie_detail">MovieDetail</string>
     <string name="button_mark_Favorite">MARK AS FAVORITE</string>
+    <string name="posterLocation">Poster of Movie</string>
+    <string name="orderByRate">Order By Rate</string>
+    <string name="orderByPopularity">Order By Popularity</string>
+    <string name="rateValue">/10</string>
 </resources>

@@ -22,15 +22,8 @@ import com.squareup.picasso.Picasso;
 
 public class MovieDetail extends AppCompatActivity {
 
-    TextView nameMovie;
-    ImageView poster;
-    TextView yearRelease;
-    TextView rateMovie;
     TextView durationMovie;
     Button markAsFavorite;
-    TextView sinopsis;
-    movie movieObjt;
-
 
 
     @Override
@@ -43,25 +36,25 @@ public class MovieDetail extends AppCompatActivity {
         if(intent!=null){
 
 
-            movieObjt=intent.getParcelableExtra("movie");
+            movie movieObjt = intent.getParcelableExtra("movie");
 
 
-
-            nameMovie=(TextView)findViewById(R.id.tv_movieName);
-            Log.i("Detail",":Title_"+movieObjt.getTitle());
+            TextView nameMovie = (TextView) findViewById(R.id.tv_movieName);
+            Log.i("Detail",":Title_"+ movieObjt.getTitle());
             nameMovie.setText(movieObjt.getTitle());
 
-            poster=(ImageView)findViewById(R.id.tv_posterMovie);
+            ImageView poster = (ImageView) findViewById(R.id.tv_posterMovie);
             if(!movieObjt.getPosterPath().isEmpty()){
                 Picasso.with(this).load(movieObjt.getPosterPath()).into(poster);
             }
 
-            yearRelease=(TextView)findViewById(R.id.tv_dateRelease);
+            TextView yearRelease = (TextView) findViewById(R.id.tv_dateRelease);
             yearRelease.setText((movieObjt.getReleaseDate().toString()).substring(0,4));
 
-            rateMovie=(TextView)findViewById(R.id.tv_rateMovie);
-            rateMovie.setText(Double.toString(movieObjt.getVoteCount())+"/10");
-            sinopsis=(TextView)findViewById(R.id.tv_sinopsisMovie);
+            TextView rateMovie = (TextView) findViewById(R.id.tv_rateMovie);
+            //rateMovie.setText(movieObjt.getVoteCount().concat(getString(R.string.rateValue)));
+            rateMovie.setText(String.format(Double.toString(movieObjt.getVoteCount()),getString(R.string.rateValue)));
+            TextView sinopsis = (TextView) findViewById(R.id.tv_sinopsisMovie);
             sinopsis.setText(movieObjt.getOverView());
 
 

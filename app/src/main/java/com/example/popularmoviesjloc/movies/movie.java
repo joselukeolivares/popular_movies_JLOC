@@ -10,26 +10,26 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class movie implements Parcelable  {
-    double popularity;
-    double voteCount;
-    boolean video;
-    String posterPath;
-    int id;
-    boolean adult;
-    String backdropPath;
-    String originalLenguage;
-    String OriginalTitle;
-    ArrayList<Integer> genreIDs;
-    String title;
-    double vote_average;
-    String overView;
-    String releaseDate;
+   private double popularity;
+    private double voteCount;
+    private boolean video;
+    private String posterPath;
+    private int id;
+    private boolean adult;
+    private String backdropPath;
+    private String originalLenguage;
+    private String OriginalTitle;
+    private ArrayList<Integer> genreIDs;
+    private String title;
+    private double vote_average;
+    private String overView;
+    private String  releaseDate;
     private static final String DATE_OUTPUT_FORMAT="yyyy-MM-dd";
     public movie(){
 
     }
 
-    public movie(Parcel in){
+    private movie(Parcel in){
         readFromParcel(in);
     }
 
@@ -115,7 +115,7 @@ public class movie implements Parcelable  {
         parcel.writeString(this.overView);
     }
 
-    public void readFromParcel(Parcel in){
+    private void readFromParcel(Parcel in){
         title=in.readString();
         posterPath=in.readString();
         releaseDate=in.readString();

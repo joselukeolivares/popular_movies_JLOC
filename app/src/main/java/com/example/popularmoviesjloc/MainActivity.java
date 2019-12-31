@@ -25,6 +25,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import java.lang.ref.WeakReference;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,31 +33,27 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements movieAdapter.onClickAdapter {
 
-     RecyclerView recyclerView;
-     movieAdapter mAdapter;
-    private RecyclerView.LayoutManager layoutManager;
+    private movieAdapter mAdapter;
 
-
-     private String URLBase="https://api.themoviedb.org/3/discover/movie";
 
     //language=en-US
 
 
-    private  String sortQuery="sort_by";
+    private final String sortQuery="sort_by";
     private String sortParam="vote_average.desc";
     private  ArrayList<movie> movieList;
 
     final private String apiKeyQuery="api_key";
-    final private String apiKeyParam="b70d678e90b7b2248b8795db25cd8d26";
-    private  String[] keysUri={sortQuery,apiKeyQuery};
+    private final String[] keysUri={sortQuery,apiKeyQuery};
     private String[] keysParam;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        RecyclerView.LayoutManager layoutManager;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView=(RecyclerView)findViewById(R.id.my_recycler_view);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         layoutManager=new GridLayoutManager(this,2);
         mAdapter=new movieAdapter(this);
 
@@ -77,9 +74,11 @@ public class MainActivity extends AppCompatActivity implements movieAdapter.onCl
 
     private  void getJsonString(){
         movieList=new ArrayList<>();
-        Uri uri= NetworkUtils.getURI(URLBase,keysUri,new String[]{sortParam,apiKeyParam});
+        String apiKeyParam = "b70d678e90b7b2248b8795db25cd8d26";
+        String URLBase = "https://api.themoviedb.org/3/discover/movie";
+        Uri uri= NetworkUtils.getURI(URLBase,keysUri,new String[]{sortParam, apiKeyParam});
         URL url=NetworkUtils.getURL(uri);
-        new movie_db().execute(url);
+        new movie_db(this).execute(url);
 
     }
 
@@ -177,9 +176,12 @@ Log.i("stringToJson",result);
         startActivity(intent);
     }
 
-    public  class movie_db extends AsyncTask<URL,Integer,String> {
+    static class movie_db extends AsyncTask<URL,Integer,String> {
 
-
+        private final WeakReference<MainActivity> reference;
+        movie_db(MainActivity context){
+            reference=new WeakReference<>(context);
+        }
         @Override
         protected String doInBackground(URL... urls) {
             String result=null;
@@ -195,9 +197,10 @@ Log.i("stringToJson",result);
 
         @Override
         protected void onPostExecute(String s) {
-            stringToJson(s);
+            MainActivity activity=reference.get();
+            activity.stringToJson(s);
             Log.i("new list",s);
-            updateDataAdapter(movieList);
+            activity.updateDataAdapter(activity.movieList);
         }
     }
 

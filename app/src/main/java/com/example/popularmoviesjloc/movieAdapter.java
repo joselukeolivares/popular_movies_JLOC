@@ -16,9 +16,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class movieAdapter extends RecyclerView.Adapter<movieAdapter.movieViewHolder> {
-    ArrayList<movie> moviesList;
-    Context context;
-    onClickAdapter onClickImgView;
+    private ArrayList<movie> moviesList;
+    private Context context;
+    private final onClickAdapter onClickImgView;
 
     public movieAdapter( onClickAdapter onClickMovie){
         onClickImgView=onClickMovie;
@@ -74,10 +74,10 @@ public class movieAdapter extends RecyclerView.Adapter<movieAdapter.movieViewHol
 
 
     class movieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private ImageView posterMovie;
+        private final ImageView posterMovie;
         private int indexList;
 
-        public movieViewHolder(@NonNull View itemView) {
+        movieViewHolder(@NonNull View itemView) {
             super(itemView);
             posterMovie=(ImageView)itemView.findViewById(R.id.imageMovie);
             itemView.setOnClickListener(this);
