@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements movieAdapter.onCl
 
     //language=en-US
 
-
+    String apiKeyParam;
     private final String sortQuery="sort_by";
     private String sortParam="vote_average.desc";
     private  ArrayList<movie> movieList;
@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements movieAdapter.onCl
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
+        apiKeyParam = getString(R.string.apiKey);
 
         getJsonString();
 
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements movieAdapter.onCl
 
     private  void getJsonString(){
         movieList=new ArrayList<>();
-        String apiKeyParam = "b70d678e90b7b2248b8795db25cd8d26";
+
         String URLBase = "https://api.themoviedb.org/3/discover/movie";
         Uri uri= NetworkUtils.getURI(URLBase,keysUri,new String[]{sortParam, apiKeyParam});
         URL url=NetworkUtils.getURL(uri);

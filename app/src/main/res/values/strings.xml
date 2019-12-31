@@ -6,4 +6,5 @@
     <string name="orderByRate">Order By Rate</string>
     <string name="orderByPopularity">Order By Popularity</string>
     <string name="rateValue">/10</string>
+    <string name="apiKey">b70d678e90b7b2248b8795db25cd8d26</string>
 </resources>
