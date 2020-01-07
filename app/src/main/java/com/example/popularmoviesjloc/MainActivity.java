@@ -1,7 +1,10 @@
 package com.example.popularmoviesjloc;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,6 +12,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -45,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements movieAdapter.onCl
 
     final private String apiKeyQuery="api_key";
     private final String[] keysUri={sortQuery,apiKeyQuery};
+    private Button btnTryAgain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +68,13 @@ public class MainActivity extends AppCompatActivity implements movieAdapter.onCl
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mAdapter);
         apiKeyParam = getString(R.string.apiKey);
+        btnTryAgain=(Button)findViewById(R.id.btn_tryAgain);
+        btnTryAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getJsonString();
+            }
+        });
 
         getJsonString();
 
@@ -73,12 +89,26 @@ public class MainActivity extends AppCompatActivity implements movieAdapter.onCl
     }
 
     private  void getJsonString(){
-        movieList=new ArrayList<>();
+        LinearLayout internetStat=(LinearLayout)findViewById(R.id.internetContainer);
+        if(isONline()){
+            if(apiKeyParam!=null&&!apiKeyParam.equals("")){
+                movieList=new ArrayList<>();
+                internetStat.setVisibility(View.INVISIBLE);
 
-        String URLBase = "https://api.themoviedb.org/3/discover/movie";
-        Uri uri= NetworkUtils.getURI(URLBase,keysUri,new String[]{sortParam, apiKeyParam});
-        URL url=NetworkUtils.getURL(uri);
-        new movie_db(this).execute(url);
+                String URLBase = "https://api.themoviedb.org/3/discover/movie";
+                Uri uri= NetworkUtils.getURI(URLBase,keysUri,new String[]{sortParam, apiKeyParam});
+                URL url=NetworkUtils.getURL(uri);
+                new movie_db(this).execute(url);
+            }else{
+                TextView txtView=(TextView)findViewById(R.id.tv_noInternetConnection);
+                txtView.setText(getString(R.string.apiKey_invalid));
+                btnTryAgain.setVisibility(View.INVISIBLE);
+            }
+
+        }else{
+            internetStat.setVisibility(View.VISIBLE);
+        }
+
 
     }
 
@@ -206,6 +236,10 @@ Log.i("stringToJson",result);
         }
     }
 
-
+    public boolean isONline(){
+        ConnectivityManager cm=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo=cm.getActiveNetworkInfo();
+        return netInfo!=null&&netInfo.isConnected();
+    }
 
 }
