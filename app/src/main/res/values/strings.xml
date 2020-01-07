@@ -10,5 +10,5 @@
     <string name="internetStatus">Check your Internet Connection</string>
     <string name="btn_tryAgain">Try again</string>
     <string name="apiKey_invalid">Please check Readme file. Api Key for dataBase is invalid</string>
-    
+
 </resources>
