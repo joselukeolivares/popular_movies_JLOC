@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements movieAdapter.onCl
 
         MenuInflater inflater=getMenuInflater();
         inflater.inflate(R.menu.movies_menu,menu);
-
+//Esto es hecho con conexion remota
 
         return true;
     }
@@ -149,6 +149,8 @@ Log.i("stringToJson",result);
                     JSONObject movieFromDB=movies.getJSONObject(i);
                     movie movieX=new movie();
                     try{
+                        String id=movieFromDB.getString("id");
+                        movieX.setId(id);
                         String title=movieFromDB.getString("title");
                         movieX.setTitle(title);
                         String pathPoster=movieFromDB.getString("poster_path");

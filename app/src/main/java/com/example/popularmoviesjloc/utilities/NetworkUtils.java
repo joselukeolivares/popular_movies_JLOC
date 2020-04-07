@@ -18,14 +18,20 @@ public class NetworkUtils {
 
     public static Uri getURI(String URLBase,String[] keys,String[] params){
 
-        Uri uri=
-                Uri.parse(URLBase).buildUpon()
-                        .appendQueryParameter(keys[0],params[0])
-                        .appendQueryParameter(keys[1],params[1])
-                        .build();
-        Log.i("uri:"+params[0],uri.toString());
+        Uri.Builder uri=
+                Uri.parse(URLBase).buildUpon();
+                        //.appendQueryParameter(keys[0],params[0])
+                        //.appendQueryParameter(keys[1],params[1])
+                        //.build();
+  for (int i=0;i<keys.length;i++){
 
-        return uri;
+      uri.appendQueryParameter(keys[i],params[i]);
+  }
+
+        
+        //Log.i("uri:"+params[0],uri.toString());
+
+        return uri.build();
 
     }
 

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@android:color/darker_gray"
+    >
+
+
+    <ImageView
+        android:id="@+id/tv_posterMovie"
+        android:layout_width="157dp"
+        android:layout_height="244dp"
+        android:contentDescription="@string/posterLocation"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pelicula"
+            android:layout_marginTop="10dp"
+            android:id="@+id/tv_durationMovie"
+            />
+            -->
+
+    <TextView
+        android:id="@+id/tv_dateRelease"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2001"
+
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toTopOf="@+id/tv_posterMovie" />
+
+    <TextView
+        android:id="@+id/tv_rateMovie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/tv_dateRelease"
+        tools:text="10" />
+
+
+    <Button
+        android:id="@+id/button_favoriteMark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_mark_Favorite"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/tv_rateMovie" />
+
+    <TextView
+        android:id="@+id/tv_sinopsisMovie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Sinapsis"
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="208dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="355dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="288dp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

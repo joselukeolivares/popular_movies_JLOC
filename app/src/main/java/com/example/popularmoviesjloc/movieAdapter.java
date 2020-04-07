@@ -23,6 +23,7 @@ public class movieAdapter extends RecyclerView.Adapter<movieAdapter.movieViewHol
     public movieAdapter( onClickAdapter onClickMovie){
         onClickImgView=onClickMovie;
 
+
     }
 
     public interface onClickAdapter{

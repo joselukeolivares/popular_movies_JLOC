@@ -6,9 +6,10 @@
     <string name="orderByRate">Order By Rate</string>
     <string name="orderByPopularity">Order By Popularity</string>
     <string name="rateValue">/10</string>
-    <string name="apiKey"></string>
+    <string name="apiKey">b70d678e90b7b2248b8795db25cd8d26</string>
     <string name="internetStatus">Check your Internet Connection</string>
     <string name="btn_tryAgain">Try again</string>
     <string name="apiKey_invalid">Please check Readme file. Api Key for dataBase is invalid</string>
+    <string name="movie_db">https://api.themoviedb.org/3/</string>
 
 </resources>

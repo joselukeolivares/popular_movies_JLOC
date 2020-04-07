@@ -1,90 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<androidx.core.widget.NestedScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MovieDetail">
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:orientation="vertical"
+        android:fillViewport="true"
+        tools:context=".MovieDetail">
+
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="100sp"
+            android:background="@android:color/background_light"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></ImageView>
 
     <TextView
         android:id="@+id/tv_movieName"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:textSize="30sp"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        tools:text="Movie Title">
 
+    </TextView>
 
-
-        ></TextView>
-    <LinearLayout
+    <include
+        android:id="@+id/include"
+        layout="@layout/movie_poster_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        app:layout_constraintTop_toBottomOf="@+id/imageView">
 
-        <ImageView
-            android:layout_width="150dp"
-            android:layout_height="250dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginBottom="50dp"
-            android:id="@+id/tv_posterMovie"
-            android:contentDescription="@string/posterLocation"
-            />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+    </include>
 
-                android:layout_marginTop="10dp"
-                android:id="@+id/tv_dateRelease"
-                />
-            <!--
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pelicula"
-                android:layout_marginTop="10dp"
-                android:id="@+id/tv_durationMovie"
-                />
-                -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+    <include
+        android:id="@+id/include_trailers"
+        layout="@layout/trailers_movie_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/include"></include>
 
-                android:layout_marginTop="10dp"
-                android:id="@+id/tv_rateMovie"
-                />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/button_mark_Favorite"
-                android:layout_marginTop="10dp"
-                android:id="@+id/button_favoriteMark"
-                />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-        <TextView
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
-            android:id="@+id/tv_sinopsisMovie"
+            android:id="@+id/jloc_rv"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintTop_toBottomOf="@+id/include_trailers"
             />
 
-
-
-
-
-
-</androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
