@@ -16,6 +16,26 @@ public class movie implements Parcelable  {
     private String overView;
     private String  releaseDate;
     private  String id;
+    private int local_id;
+
+    public String getTrailers() {
+        return trailers;
+    }
+
+    public void setTrailers(String trailers) {
+        this.trailers = trailers;
+    }
+
+    public String getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(String reviews) {
+        this.reviews = reviews;
+    }
+
+    private String trailers;
+    private String reviews;
 
     public movie(){
 
@@ -84,9 +104,13 @@ public class movie implements Parcelable  {
     }
 
     public void setPosterPath(String posterPathParam){
-        posterPath="http://image.tmdb.org/t/p/w185/"+posterPathParam;
+        posterPath=posterPathParam;
     }
     public String getPosterPath(){
+        return "http://image.tmdb.org/t/p/w185/"+posterPath;
+    }
+
+    public String getPosterCode(){
         return posterPath;
     }
 
@@ -104,6 +128,10 @@ public class movie implements Parcelable  {
         parcel.writeDouble(this.voteCount);
         parcel.writeString(this.overView);
         parcel.writeString(this.id);
+        parcel.writeString(this.trailers);
+        parcel.writeString(this.reviews);
+        parcel.writeInt(this.local_id);
+
     }
 
     private void readFromParcel(Parcel in){
@@ -113,5 +141,16 @@ public class movie implements Parcelable  {
         voteCount=in.readDouble();
         overView=in.readString();
         id=in.readString();
+        trailers=in.readString();
+        reviews=in.readString();
+        local_id=in.readInt();
+    }
+
+    public int getLocal_id() {
+        return local_id;
+    }
+
+    public void setLocal_id(int local_id) {
+        this.local_id = local_id;
     }
 }

@@ -1,15 +1,27 @@
 package com.example.popularmoviesjloc.DataBase;
 
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import com.example.popularmoviesjloc.movies.review;
 
 import java.util.ArrayList;
 
+import static androidx.room.ForeignKey.CASCADE;
+
 @Entity(tableName = "movie")
 public class movieEntry {
+    public int getIddB() {
+        return iddB;
+    }
+
+    public void setIddB(int iddB) {
+        this.iddB = iddB;
+    }
+
     @PrimaryKey(autoGenerate = true)
+    private int iddB;
     private Double voteCount;
     private String posterPath;
     private String title;
@@ -17,6 +29,16 @@ public class movieEntry {
     private String releaseDate;
     private String id;
     private String trailers;
+
+    public Double getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(Double popularity) {
+        this.popularity = popularity;
+    }
+
+    private Double popularity;
 
     public Double getVoteCount() {
         return voteCount;
@@ -84,14 +106,7 @@ public class movieEntry {
 
     private String reviews;
 
-    public movieEntry(Double voteCount, String posterPath, String title, String overView, String releaseDate, String id, String trailers, String reviews) {
-        this.voteCount = voteCount;
-        this.posterPath = posterPath;
-        this.title = title;
-        this.overView = overView;
-        this.releaseDate = releaseDate;
-        this.id = id;
-        this.trailers = trailers;
-        this.reviews = reviews;
+    public movieEntry() {
+
     }
 }

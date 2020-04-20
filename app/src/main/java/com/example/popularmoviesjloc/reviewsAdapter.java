@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.popularmoviesjloc.DataBase.reviewEntry;
 import com.example.popularmoviesjloc.movies.review;
 import com.example.popularmoviesjloc.movies.trailer;
 
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 
 public class reviewsAdapter extends RecyclerView.Adapter<reviewsAdapter.reviewVH> {
     Context context;
-    ArrayList<review> reviewsList =new ArrayList<>();
+    ArrayList<reviewEntry> reviewsList =new ArrayList<>();
     onClickAdapter onClickAdapterObj;
     public reviewsAdapter(onClickAdapter onClickAdapterObj) {
         this.onClickAdapterObj=onClickAdapterObj;
@@ -27,18 +28,18 @@ public class reviewsAdapter extends RecyclerView.Adapter<reviewsAdapter.reviewVH
         reviewObj.setContent("joseluisoc");
         reviewObj.setUrl("joseluisoc");
 
-
+        /*
         for(int i=0;i<100;i++){
             reviewsList.add(reviewObj);
         }
-
+        */
         Log.i(this.getClass().getName(),reviewsList.size()+"");
 
 
     }
 
     public interface onClickAdapter{
-        public void onClickfromViewHolder(review reviewObj);
+        public void onClickfromViewHolder(reviewEntry reviewObj);
     }
 
     @NonNull
@@ -56,7 +57,7 @@ public class reviewsAdapter extends RecyclerView.Adapter<reviewsAdapter.reviewVH
 
     @Override
     public void onBindViewHolder(@NonNull reviewVH holder, int position) {
-        review reviewObj= reviewsList.get(position);
+        reviewEntry reviewObj= reviewsList.get(position);
         String author=reviewObj.getAuthor();
         String content=reviewObj.getContent();
         String url=reviewObj.getUrl();
@@ -93,12 +94,12 @@ public class reviewsAdapter extends RecyclerView.Adapter<reviewsAdapter.reviewVH
 
         @Override
         public void onClick(View view) {
-            review reviewObj=reviewsList.get(getAdapterPosition());
+            reviewEntry reviewObj=reviewsList.get(getAdapterPosition());
             onClickAdapterObj.onClickfromViewHolder(reviewObj);
         }
     }
 
-    public void updateReviews(ArrayList<review> newData){
+    public void updateReviews(ArrayList<reviewEntry> newData){
         reviewsList=newData;
     }
 }

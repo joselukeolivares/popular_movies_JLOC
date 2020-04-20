@@ -73,7 +73,7 @@ public class NetworkUtils {
         }
 
 
-        Log.i("Response",result.toString());
+        //Log.i("Response",result.toString());
         return result.toString();
     }
 }

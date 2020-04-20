@@ -55,6 +55,11 @@ public class movieAdapter extends RecyclerView.Adapter<movieAdapter.movieViewHol
         holder.indexList=position;
         Picasso.with(context).load(pathPoster).into(holder.posterMovie);
         //Log.i("poster "+position,"http://image.tmdb.org/t/p/w185/"+pathPoster);
+          Log.i("poster "+position,""+movieSelected.getPosterPath());
+          //Movie is favorite, marking the star
+          if(movieSelected.getLocal_id()>0){
+              holder.yellow_star.setVisibility(View.VISIBLE);
+          }
 
 
     }
@@ -76,11 +81,13 @@ public class movieAdapter extends RecyclerView.Adapter<movieAdapter.movieViewHol
 
     class movieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final ImageView posterMovie;
+        private final ImageView yellow_star;
         private int indexList;
 
         movieViewHolder(@NonNull View itemView) {
             super(itemView);
             posterMovie=(ImageView)itemView.findViewById(R.id.imageMovie);
+            yellow_star=(ImageView)itemView.findViewById(R.id.yellow_star);
             itemView.setOnClickListener(this);
         }
 
